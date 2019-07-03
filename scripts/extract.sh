@@ -13,11 +13,11 @@ rostopic echo -b $1 -p /d435/color/camera_info > result/static/d435_color_camera
 echo "creating csv: /d435/depth/camera_info"
 rostopic echo -b $1 -p /d435/depth/camera_info > result/static/d435_depth_camera_info.csv
 
-#echo "creating csv: /d435/infra1/camera_info"
-#rostopic echo -b $1 -p /d435/infra1/camera_info > result/static/d435_infra1_camera_info.csv
+echo "creating csv: /d435/infra1/camera_info"
+rostopic echo -b $1 -p /d435/infra1/camera_info > result/static/d435_infra1_camera_info.csv
 
-#echo "creating csv: /d435/infra2/camera_info"
-#rostopic echo -b $1 -p /d435/infra2/camera_info > result/static/d435_infra2_camera_info.csv
+echo "creating csv: /d435/infra2/camera_info"
+rostopic echo -b $1 -p /d435/infra2/camera_info > result/static/d435_infra2_camera_info.csv
 
 echo "creating csv: /t265/fisheye1/camera_info"
 rostopic echo -b $1 -p /t265/fisheye1/camera_info > result/static/t265_fisheye1_camera_info.csv
@@ -41,9 +41,14 @@ echo "creating csv: /tf_static"
 rostopic echo -b $1 -p /tf_static > result/static/tf_static.csv
 
 echo "extracting pointclouds: /d435/depth/color/points"
-rosrun pcl_ros bag_to_pcd $1 /d435/depth/color/points result/pointclouds
+rosrun pcl_ros bag_to_pcd $1 /d435/depth/color/points result/pointclouds/d435_depth_color_points
 
-echo "extracting images"
+echo "renaming points"
 source ~/anaconda3/etc/profile.d/conda.sh
 conda deactivate
+rosrun t265_d435 rename_points.py -p $(pwd) 
+
+echo "extracting images"
 rosrun t265_d435 image_extraction.py -p $(pwd) -b $1
+
+echo "dont forget to rename results directory! next extraction will override result dir!"

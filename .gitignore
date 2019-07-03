@@ -1,1 +1,3 @@
 *.bag
+scripts/result/*
+scripts/bags/*
