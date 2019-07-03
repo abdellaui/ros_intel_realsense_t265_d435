@@ -1,0 +1,3 @@
+<launch>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find t265_d435)/rviz/d435_t265.rviz" required="true" />
+</launch>
