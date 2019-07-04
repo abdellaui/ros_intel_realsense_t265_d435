@@ -13,11 +13,11 @@ rostopic echo -b $1 -p /d435/color/camera_info > result/static/d435_color_camera
 echo "creating csv: /d435/depth/camera_info"
 rostopic echo -b $1 -p /d435/depth/camera_info > result/static/d435_depth_camera_info.csv
 
-echo "creating csv: /d435/infra1/camera_info"
-rostopic echo -b $1 -p /d435/infra1/camera_info > result/static/d435_infra1_camera_info.csv
+#echo "creating csv: /d435/infra1/camera_info"
+#rostopic echo -b $1 -p /d435/infra1/camera_info > result/static/d435_infra1_camera_info.csv
 
-echo "creating csv: /d435/infra2/camera_info"
-rostopic echo -b $1 -p /d435/infra2/camera_info > result/static/d435_infra2_camera_info.csv
+#echo "creating csv: /d435/infra2/camera_info"
+#rostopic echo -b $1 -p /d435/infra2/camera_info > result/static/d435_infra2_camera_info.csv
 
 echo "creating csv: /t265/fisheye1/camera_info"
 rostopic echo -b $1 -p /t265/fisheye1/camera_info > result/static/t265_fisheye1_camera_info.csv

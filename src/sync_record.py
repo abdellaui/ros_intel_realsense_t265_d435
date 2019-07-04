@@ -15,7 +15,7 @@ parser.add_argument("-p","--path", default=os.getcwd(), help="path to bag")
 parser.add_argument("-b","--bag", default=datetime.datetime.now().strftime("%Y-%m%d-%H-%M-%S")+".bag", help="name of bag")
 opt = parser.parse_args()
 
-
+starttime = datetime.datetime.now()
 bagAbsPath = os.path.join(opt.path, opt.bag);
 bag = rosbag.Bag(bagAbsPath, 'w')
 rospy.init_node("sync_data")
@@ -25,8 +25,6 @@ topics = [
     "/d435/color/image_raw",
     "/d435/depth/image_rect_raw",
     "/d435/depth/color/points",
-    "/d435/infra1/image_rect_raw",
-    "/d435/infra2/image_rect_raw",
     "/t265/fisheye1/image_raw",
     "/t265/fisheye2/image_raw",
     "/t265/accel/sample",
@@ -36,8 +34,6 @@ topics = [
 
     "/d435/color/camera_info",
     "/d435/depth/camera_info",
-    "/d435/infra1/camera_info",
-    "/d435/infra2/camera_info",
     "/t265/fisheye1/camera_info",
     "/t265/fisheye2/camera_info",
     "/tf_static"
@@ -50,8 +46,8 @@ def static_callback(*arg):
         return
     try:
         for i, e in enumerate(arg):
-            rospy.logwarn(topics[11+i])
-            bag.write(topics[11+i], e)
+            rospy.logwarn(topics[9+i])
+            bag.write(topics[9+i], e)
         bag.flush()
         rospy.logwarn("statics finished...")
         static_init = True
@@ -67,7 +63,7 @@ def callback(*arg):
         for i, e in enumerate(arg):
             bag.write(topics[i], e)
         bag.flush()
-        print(datetime.datetime.now())
+        print(datetime.datetime.now()-starttime)
     except Exception as e:
         rospy.logerr(e)
 
@@ -78,28 +74,24 @@ subscription = [
     Subscriber(topics[2], PointCloud2),
     Subscriber(topics[3], Image),
     Subscriber(topics[4], Image),
-    Subscriber(topics[5], Image),
-    Subscriber(topics[6], Image),
-    Subscriber(topics[7], Imu),
-    Subscriber(topics[8], Imu),
-    Subscriber(topics[9], Odometry),
-    Subscriber(topics[10], TFMessage)
+    Subscriber(topics[5], Imu),
+    Subscriber(topics[6], Imu),
+    Subscriber(topics[7], Odometry),
+    Subscriber(topics[8], TFMessage)
 ]
 
 subscription_static = [
+    Subscriber(topics[9], CameraInfo),
+    Subscriber(topics[10], CameraInfo),
     Subscriber(topics[11], CameraInfo),
     Subscriber(topics[12], CameraInfo),
-    Subscriber(topics[13], CameraInfo),
-    Subscriber(topics[14], CameraInfo),
-    Subscriber(topics[15], CameraInfo),
-    Subscriber(topics[16], CameraInfo),
-    Subscriber(topics[17], TFMessage)
+    Subscriber(topics[13], TFMessage)
 ]
 
-ts = ApproximateTimeSynchronizer(subscription, queue_size=11, slop=0.1, allow_headerless=True)
+ts = ApproximateTimeSynchronizer(subscription, queue_size=9, slop=0.1, allow_headerless=True)
 ts.registerCallback(callback)
 
-ts_static = ApproximateTimeSynchronizer(subscription_static, queue_size=7, slop=0.1, allow_headerless=True)
+ts_static = ApproximateTimeSynchronizer(subscription_static, queue_size=5, slop=0.1, allow_headerless=True)
 ts_static.registerCallback(static_callback)
 
 rospy.spin()

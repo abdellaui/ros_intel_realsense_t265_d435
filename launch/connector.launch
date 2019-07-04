@@ -1,6 +1,4 @@
 <launch>
-  <!--<arg name="serial_no_camera1"    			default="9053121121760000"/>
-  <arg name="serial_no_camera2"    			default="829313020172"/> -->
   <arg name="serial_no_camera1"    			default="905312112176"/> 			<!-- Note: Replace with actual serial number -->
   <arg name="serial_no_camera2"    			default="829212071939"/> 			<!-- Note: Replace with actual serial number -->
   <arg name="camera1"              			default="t265"/>		<!-- Note: Replace with camera name -->
@@ -92,6 +90,6 @@
 
     </include>
   </group>
-  <node pkg="tf" type="static_transform_publisher" name="t265_to_d435" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="t265_to_d435" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 30"/>
 
 </launch>
