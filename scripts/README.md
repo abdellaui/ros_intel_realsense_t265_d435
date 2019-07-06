@@ -14,3 +14,8 @@ for replaying a rosbag:
 - disconnect from your device
 - run `rosbag play <filename>`
 - sometimes it is usefull to restart the vizualizer
+
+for extracting a bag:
+- run `roscore` if there is not running a roscore process
+- run `./extract bags/<bagname>.bag`
+- results will be under `results/`. please rename it, next extract session will override this directory
