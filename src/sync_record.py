@@ -55,6 +55,7 @@ def static_callback(*arg):
         static_init = True
         if ts_static:
             del ts_static # remove subscription, its not necessary anymore (otherwhise it produces error after a while)
+    
     except Exception as e:
         rospy.loginfo("#static#")
         rospy.logerr(e)
@@ -88,8 +89,8 @@ def timer_callback(*arg):
         rospy.logerr(error_string.format(str(time_occured)))
         rospy.signal_shutdown(error_string.format(str(time_occured)))
 
-def record_spin():
-    global topics
+def init_callbacks():
+    global topics, ts_static
 
     rospy.init_node("sync_data")
 
@@ -133,7 +134,7 @@ def main():
 
 
     spining = True
-    record_spin()
+    init_callbacks()
     spining = False
 
     bag.close()
