@@ -36,9 +36,11 @@
   <arg name="infra_fps"                 default="15"/>
   <arg name="enable_depth"              value="true"/>
   <arg name="enable_color"              value="true"/>
-  <arg name="enable_infra1"             value="true"/>
-  <arg name="enable_infra2"             value="true"/>
+  <arg name="enable_infra1"             value="false"/>
+  <arg name="enable_infra2"             value="false"/>
   <arg name="enable_pointcloud"         value="true"/>
+  <arg name="filters"                   value="pointcloud"/>
+
   <!-- end d435 -->
 
   <group ns="$(arg camera1)">
@@ -86,10 +88,17 @@
       <arg name="enable_infra1"     value="$(arg enable_infra1)"/>
       <arg name="enable_infra2"     value="$(arg enable_infra2)"/>
       <arg name="enable_pointcloud" value="$(arg enable_pointcloud)"/>
+      <arg name="filters"           value="$(arg filters)"/>
       <arg name="enable_sync"       value="$(arg enable_sync)"/>
 
     </include>
   </group>
-  <node pkg="tf" type="static_transform_publisher" name="t265_to_d435" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 30"/>
+
+
+
+  <node pkg="tf" type="static_transform_publisher" name="d435_link_to_depth" args="0.0 0.0 0.0 -0.5 0.5 -0.5 0.5 $(arg tf_prefix_camera2)_link $(arg tf_prefix_camera2)_depth_optical_frame 30"/>
+  <node pkg="tf" type="static_transform_publisher" name="pose_to_t265" args="0.0 0.0 0.0 0.0 0.0 0.0 1.0 $(arg tf_prefix_camera1)_pose_frame $(arg tf_prefix_camera1)_link 30"/>
+  <node pkg="tf" type="static_transform_publisher" name="t265_to_d435" args="0.0 0.0 0.0 0.0 0.0 0.0 1.0 $(arg tf_prefix_camera1)_link $(arg tf_prefix_camera2)_link 30"/>
+
 
 </launch>

@@ -33,7 +33,7 @@ with open(storepath, "w+") as file:
     newString = "dest x y z w p q r\n"+timestamp+"\noffset: "+ str(offset) +"\n"
     file.write(newString)
     for i, data in enumerate(dataset):
-        newString = "{} {} {} {} {} {} {} {}\n".format(data[0], data[1]+offset[0], data[2]+offset[1], data[3]+offset[2], data[4], data[5], data[6], data[7])
+        newString = "{} {} {} {} {} {} {} {}\n".format(data[0], data[1]+offset[0], data[2]+offset[1], data[3]+offset[2], data[7], data[4], data[5], data[6])
         file.write(newString)
         
     file.close()

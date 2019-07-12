@@ -67,7 +67,6 @@ def callback(*arg):
         return
     try:
         for i, e in enumerate(arg):
-            pass
             bag.write(topics[i], e)
             #bag.flush()
         now = datetime.datetime.now()
