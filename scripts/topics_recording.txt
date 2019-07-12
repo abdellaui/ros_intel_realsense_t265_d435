@@ -5,12 +5,6 @@
 /d435/depth/image_rect_raw
 /d435/depth/color/points
 
-#/d435/infra1/camera_info
-#/d435/infra1/image_rect_raw
-
-#/d435/infra2/camera_info
-#/d435/infra2/image_rect_raw
-
 /t265/fisheye1/camera_info
 /t265/fisheye1/image_raw
 
