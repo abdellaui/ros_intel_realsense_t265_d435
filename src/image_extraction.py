@@ -53,10 +53,11 @@ print("extracting: images")
 len_topics = len(topics)
 frame_count = 0
 for topic, msg, t in bag.read_messages(topics=topics):
-    frame_count += 1
 
     new_topic_name = topic[1:].replace('/', '_')
     frame_name = "frame%06i.png" % ( (frame_count // len_topics) + 1)
+
+    frame_count += 1
 
     path = os.path.join(new_topic_name, frame_name)
     path_abs = os.path.join(path_root, path)
