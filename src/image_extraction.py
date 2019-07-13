@@ -15,20 +15,20 @@ opt = parser.parse_args()
 
 topics = [
     "/d435/color/image_raw",
-    "/d435/depth/image_rect_raw",
+    #"/d435/depth/image_rect_raw",
     #"/d435/infra1/image_rect_raw",
     #"/d435/infra2/image_rect_raw",
-    "/t265/fisheye1/image_raw",
-    "/t265/fisheye2/image_raw",
+    #"/t265/fisheye1/image_raw",
+    #"/t265/fisheye2/image_raw",
 ]
 
 csv_dict = {
     'd435_color_image_raw': [],
-    'd435_depth_image_rect_raw': [],
+    #'d435_depth_image_rect_raw': [],
     #'d435_infra1_image_rect_raw': [],
     #'d435_infra2_image_rect_raw': [],
-    't265_fisheye1_image_raw': [],
-    't265_fisheye2_image_raw': []
+    #'t265_fisheye1_image_raw': [],
+    #'t265_fisheye2_image_raw': []
     }
 
 
