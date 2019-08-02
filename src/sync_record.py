@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import argparse
-import rosbag
 import rospy
-import message_filters
+from nav_msgs.msg import Odometry
+from tf.transformations import euler_from_quaternion, quaternion_from_euler
+
 import os
 import datetime
 from sensor_msgs.msg import Image, CameraInfo, Imu, PointCloud2
@@ -118,7 +119,7 @@ def init_callbacks():
     ts_static = ApproximateTimeSynchronizer(subscription_static, queue_size=100, slop=0.1, allow_headerless=True)
     ts_static.registerCallback(static_callback)
 
-    rospy.Timer(rospy.Duration(1), timer_callback) # checks all 0.5 sec if recording works as expected
+    rospy.Timer(rospy.Duration(1), timer_callback) # checks every 1 sec if recording works as expected
 
     rospy.spin()
 

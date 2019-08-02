@@ -4,7 +4,16 @@ import argparse
 import os
 import numpy as np
 import datetime
-
+import math 
+def rotateZ(_x, _y, _z, angle):
+    """ Rotates the point around the Z axis by the given angle in degrees. """
+    rad = angle * math.pi / 180
+    cosa = math.cos(rad)
+    sina = math.sin(rad)
+    x = _x * cosa - _y * sina
+    y = _x * sina + _y * cosa
+    z = _z
+    return x, y, z
 
 def quaternion_multiply(quaternion1, quaternion0):
     w0, x0, y0, z0 = quaternion0
@@ -59,14 +68,19 @@ with open(storepath, "w+") as file:
     newString = "dest x y z w p q r\n"+timestamp+"\noffset: "+ str(offset) +"; quaternion: "+ str(offset_qt) +"\n"
     file.write(newString)
     for i, data in enumerate(dataset):
-        q1 = np.array([data[7], data[4], data[5], data[6]], dtype=np.float64)
-        q2 = np.array(offset_qt, dtype=np.float64)
-        q = quaternion_multiply(q1, q2)
-
-        x = data[1]*scale[0] + offset[0]
-        y = data[2]*scale[1] + offset[1]
-        z = data[3]*scale[2] + offset[2]
+        q1 = np.array([data[7], -1*data[5], data[4], data[6]], dtype=np.float64)
+        #q2 = np.array(offset_qt, dtype=np.float64)
+        #q = quaternion_multiply(q1, q2)
+        q = quaternion_multiply(q1, np.array([0.5, 0.5, 0, 0], dtype=np.float64)) # z-rotation
+        x = data[1]*scale[0]
+        y = data[2]*scale[0]
+        z = data[3]*scale[0]
+        x,y,z = rotateZ(x,y,z, 90) # z-rotation
+        x += offset[0]
+        y += offset[1]
+        z += offset[2]
         newString = "{} {} {} {} {} {} {} {}\n".format(data[0], x, y, z, q[0], q[1], q[2], q[3])
+        
         file.write(newString)
         
     file.close()
